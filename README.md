@@ -30,6 +30,17 @@ You can configure the SSL setting with the following environment variables:
 - `SSL_DOMAIN` - enable automatic SSL via Let's Encrypt for the given domain name
 - `DISABLE_SSL` - alternatively, set `DISABLE_SSL` to serve over plain HTTP
 
+## Deploying with Kamal
+
+This fork ships a `config/deploy.yml` for [Kamal 2](https://kamal-deploy.org). After filling in the host IP and proxy hostname in `config/deploy.yml` and setting `KAMAL_REGISTRY_PASSWORD` + `RAILS_MASTER_KEY` (see `.kamal/secrets`):
+
+```sh
+bin/kamal setup   # first time only
+bin/kamal deploy
+```
+
+Writebook stores its four SQLite databases (primary, queue, cache, cable) plus Active Storage blobs in the `writebook_storage` volume, so it's a single-host deploy — Kamal won't scale it horizontally. Kamal-proxy handles TLS; the container runs with `DISABLE_SSL=true`.
+
 ## Running in development
 
 Install dependencies:
