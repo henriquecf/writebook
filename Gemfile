@@ -21,6 +21,9 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 
+# Standard library gems no longer bundled in Ruby 4.0
+gem "benchmark"
+
 # Other
 gem "jbuilder"
 gem "redcarpet", "~> 3.6"

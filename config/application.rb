@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module Writebook
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.1
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -23,8 +23,5 @@ module Writebook
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-
-    # Opt in to 8.0 timezone behavior
-    config.active_support.to_time_preserves_timezone = :zone
   end
 end
