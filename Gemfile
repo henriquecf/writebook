@@ -17,6 +17,9 @@ gem "solid_queue"
 # Cache
 gem "solid_cache"
 
+# Action Cable
+gem "solid_cable"
+
 # Front-end
 gem "propshaft"
 gem "importmap-rails"
