@@ -12,8 +12,7 @@ gem "redis", ">= 4.0.1"
 gem "puma", ">= 5.0"
 
 # Jobs
-gem "resque", "~> 2.6.0"
-gem "resque-pool", "~> 0.7.1"
+gem "solid_queue"
 
 # Front-end
 gem "propshaft"
