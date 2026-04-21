@@ -6,7 +6,6 @@ gem "rails", github: "rails/rails"
 
 # Drivers
 gem "sqlite3", "~> 2.5"
-gem "redis", ">= 4.0.1"
 
 # Deployment
 gem "puma", ">= 5.0"
