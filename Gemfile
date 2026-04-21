@@ -48,6 +48,9 @@ end
 
 group :development do
   gem "web-console"
+
+  # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
+  gem "kamal", require: false
 end
 
 group :test do

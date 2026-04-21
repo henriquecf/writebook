@@ -1,0 +1,73 @@
+# Name of your application. Used to uniquely configure containers.
+service: writebook
+
+# Name of the container image.
+image: henriquecf/writebook
+
+# Deploy to these servers.
+servers:
+  web:
+    - 192.168.0.1
+
+# Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
+# Remove this section when using multiple web servers and ensure you terminate SSL at your load balancer.
+#
+# Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
+proxy:
+  ssl: true
+  host: writebook.example.com
+  app_port: 80
+
+# Credentials for your image host.
+registry:
+  server: ghcr.io
+  username: henriquecf
+
+  # Always use an access token rather than real password (pulled from .kamal/secrets).
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+# Configure builder setup.
+builder:
+  arch:
+    - amd64
+    - arm64
+
+# Inject ENV variables into containers (secrets come from .kamal/secrets).
+env:
+  clear:
+    SOLID_QUEUE_IN_PUMA: true
+    DISABLE_SSL: true
+    WEB_CONCURRENCY: 2
+    RAILS_MAX_THREADS: 3
+    JOB_CONCURRENCY: 1
+  secret:
+    - RAILS_MASTER_KEY
+
+# Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
+# "bin/kamal app logs -r job" will tail logs from the first server in the job section.
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
+
+# Use a persistent storage volume for SQLite databases and Active Storage uploads.
+#
+# All four SQLite files (primary, cache, queue, cable) live here, along with the
+# Active Storage blobs. Losing this volume is losing the whole app state.
+volumes:
+  - "writebook_storage:/rails/storage"
+
+# Bridge fingerprinted assets, like JS and CSS, between versions to avoid
+# hitting 404 on in-flight requests. Combines all files from new and old
+# version inside the asset_path.
+asset_path: /rails/public/assets
+
+# Configure rolling deploys by setting a wait time between batches of restarts.
+#
+# boot:
+#   limit: 10 # Can also specify as a percentage of total hosts, such as "25%"
+#   wait: 2
+
+# No accessories — SQLite + Solid Queue/Cache/Cable means no Redis, no external DB.

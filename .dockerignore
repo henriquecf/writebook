@@ -31,6 +31,7 @@
 /config/credentials.yml.enc
 
 # Ignore deployment files
+/.kamal
 /config/deploy*.yml
 /bin/deploy
 /bin/deploy-*
