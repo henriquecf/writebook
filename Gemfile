@@ -14,6 +14,9 @@ gem "puma", ">= 5.0"
 # Jobs
 gem "solid_queue"
 
+# Cache
+gem "solid_cache"
+
 # Front-end
 gem "propshaft"
 gem "importmap-rails"
